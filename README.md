@@ -30,12 +30,12 @@
 
 ## 相关接口  
 ```java
-// 生成pics/真香.gif
-FileOutputStream zhenxiang = new FileOutputStream("pics/真香.gif");
-Bot.真香(zhenxiang, "我就是饿死", "死外边，从这里跳下去", "不会吃你们一点东西", "真香");
-// 生成pics/谁赞成谁反对.gif
-FileOutputStream shuizancheng = new FileOutputStream("pics/谁赞成谁反对.gif");
-Bot.谁赞成谁反对(shuizancheng, "我话讲完了", "谁赞成  谁反对", "我反对");
+// 生成 充钱就能解决.gif
+FileOutputStream output = new FileOutputStream("充钱就能解决.gif");
+Bot.gen("充钱就能解决", output, "那我这个问题？", "你这个问题充钱就能解决");
+// 生成 真香.gif
+output = new FileOutputStream("真香.gif");
+Bot.gen("真香", output, "我就是饿死", "死外边，从这里跳下去", "不会吃你们一点东西", "真香");
 ```        
 
 ## 如何拓展场景  
