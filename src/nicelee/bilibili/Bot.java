@@ -4,7 +4,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import nicelee.bilibili.gif.GifUtil;
@@ -13,17 +15,63 @@ import nicelee.bilibili.gif.bean.TextOption;
 
 public class Bot {
 
-	public static void main(String[] a) throws FileNotFoundException {
-		FileOutputStream zhenxiang = new FileOutputStream("pics/真香.gif");
-		Bot.真香(zhenxiang, "我就是饿死", "死外边，从这里跳下去", "不会吃你们一点东西", "真香");
-
-//		FileOutputStream shuizancheng = new FileOutputStream("pics/谁赞成谁反对.gif");
-//		Bot.shuizancheng(shuizancheng, "我话讲完了", "谁赞成  谁反对", "我反对");
+	private static HashMap<String, int[][]> gifConfigs;
+	static {
+		gifConfigs = new HashMap<>(20, 0.9f);
+		// { {台词数量, 文本加词位置Y坐标}, { gif宽度, gif高度}, { 台词1起始帧, 台词1结束帧 }, ... }
+		gifConfigs.put("真香", new int[][] { { 4, 165 }, { 298, 184 }, { 0, 8 }, { 12, 23 }, { 25, 34 }, { 37, 47 } });
+		gifConfigs.put("谁赞成谁反对", new int[][] { { 3, 150 }, { 300, 168 }, { 4, 16 }, { 18, 35 }, { 37, 44 } });
 	}
 
-	private static void run(String method, FileOutputStream fout, List<TextOption> options) {
+	public static void main(String[] a) throws FileNotFoundException {
+		FileOutputStream zhenxiang = new FileOutputStream("pics/真香.gif");
+		Bot.gen("真香", zhenxiang, "我就是饿死", "死外边，从这里跳下去", "不会吃你们一点东西", "真香");
+	}
+
+	/**
+	 * 给Gif添加台词
+	 * 
+	 * @param gifType
+	 * @param fout    gif输出流
+	 * @param strs    台词
+	 */
+	public static void gen(String gifType, OutputStream fout, String... strs) {
+		int[][] gifConfig = gifConfigs.get(gifType);
+		if (gifConfig == null) {
+			System.err.println("不存在当前gifType：" + gifType);
+			return;
+		}
+		gen(gifType, gifConfig, fout, strs);
+	}
+
+	/**
+	 * 给Gif添加台词
+	 * 
+	 * @param gifType
+	 * @param gifConfig 可以调用getGifConfig获得
+	 * @param fout      gif输出流
+	 * @param strs      台词
+	 */
+	public static void gen(String gifType, int[][] gifConfig, OutputStream fout, String... strs) {
+		int num = gifConfig[0][0];
+		if (strs.length < num) {
+			System.err.println("台词数量不够");
+			return;
+		}
+		int offsetY = gifConfig[0][1];
+		int width = gifConfig[1][0];
+		List<TextOption> options = new ArrayList<TextOption>();
+		for (int i = 0; i < gifConfig.length - 2; i++) {
+			TextOption option = new TextOption(gifConfig[i + 2][0], gifConfig[i + 2][1], strs[i],
+					ImgUtil.offsetXCenter(width, strs[i], TextOption.defaultFont), offsetY);
+			options.add(option);
+		}
+		run(gifType, fout, options);
+	}
+
+	private static void run(String gifType, OutputStream fout, List<TextOption> options) {
 		try {
-			File gif = new File("pics/" + method + "/notext.gif");
+			File gif = new File("pics/" + gifType + "/notext.gif");
 			int frameRate = GifUtil.getAssumingFrameRate(gif, 1);
 			FileInputStream source = new FileInputStream(gif);
 			GifUtil.addText(source, fout, options, frameRate);
@@ -32,47 +80,7 @@ public class Bot {
 		}
 	}
 
-	/**
-	 * 给真香.gif 自定义对白
-	 * 
-	 * @param fout gif文件输出
-	 * @param strs 4句对白
-	 */
-	public static void 真香(FileOutputStream fout, String... strs) {
-		if (strs.length < 4)
-			return;
-		List<TextOption> options = new ArrayList<TextOption>();
-		TextOption option1 = new TextOption(0, 8, strs[0], ImgUtil.offsetXCenter(298, strs[0], TextOption.defaultFont),
-				165);
-		TextOption option2 = new TextOption(12, 23, strs[1],
-				ImgUtil.offsetXCenter(298, strs[1], TextOption.defaultFont), 165);
-		TextOption option3 = new TextOption(25, 34, strs[2],
-				ImgUtil.offsetXCenter(298, strs[2], TextOption.defaultFont), 165);
-		TextOption option4 = new TextOption(37, 47, strs[3],
-				ImgUtil.offsetXCenter(298, strs[3], TextOption.defaultFont), 165);
-		options.add(option1);
-		options.add(option2);
-		options.add(option3);
-		options.add(option4);
-		run(Thread.currentThread().getStackTrace()[1].getMethodName(), fout, options);
-	}
-
-	/**
-	 * 给谁赞成 谁反对.gif 自定义对白
-	 * 
-	 * @param fout gif文件输出
-	 * @param strs 3句对白
-	 */
-	public static void 谁赞成谁反对(FileOutputStream fout, String... strs) {
-		if (strs.length < 3)
-			return;
-		List<TextOption> options = new ArrayList<TextOption>();
-		TextOption option1 = new TextOption(4, 16, strs[0], ImgUtil.offsetXCenter(300, strs[0], TextOption.defaultFont), 150);
-		TextOption option2 = new TextOption(18, 35, strs[1], ImgUtil.offsetXCenter(300, strs[1], TextOption.defaultFont), 150);
-		TextOption option3 = new TextOption(37, 44, strs[2], ImgUtil.offsetXCenter(300, strs[2], TextOption.defaultFont), 150);
-		options.add(option1);
-		options.add(option2);
-		options.add(option3);
-		run(Thread.currentThread().getStackTrace()[1].getMethodName(), fout, options);
+	public static int[][] getGifConfig(String gifType) {
+		return gifConfigs.get(gifType);
 	}
 }
