@@ -1,0 +1,165 @@
+##https://help.github.com/en/actions/reference/context-and-expression-syntax-for-github-actions#contexts
+##https://octokit.github.io/rest.js/v18
+##https://github.com/actions/toolkit
+##https://help.github.com/en/actions/reference/events-that-trigger-workflows
+##https://github.com/sdras/awesome-actions
+##https://help.github.com/en/actions/reference/context-and-expression-syntax-for-github-actions#job-status-check-functions
+name: ReplyIssueComment
+
+on:
+  issue_comment:
+    types: [created]
+
+jobs:
+          
+  build:
+    runs-on: ubuntu-latest
+    if: ${{ github.actor != 'github-actions[bot]' && startsWith(github.event.issue.labels[0].name, 'Gif-') }}
+    steps:
+    - name: Do something
+      if: ${{ success() }}
+      env:
+          GITHUB_CONTEXT: ${{ toJson(github) }}
+      run: |
+        echo "$GITHUB_CONTEXT"
+        echo ${{ contains(github.event.issue.labels.*.name, 'Gif-真香') }}
+        echo ${{ github.actor != 'github-actions[bot]' }}
+        
+    - uses: actions/checkout@v2
+    - name: Check Issue Content
+      uses: actions/github-script@v2
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        script: |
+          console.log(context.payload.issue);
+          // 分析issue内容 
+          const label = context.payload.issue.labels[0].name;
+          const comment = context.payload.comment.body;
+          const start = comment.indexOf("```");
+          const end = comment.lastIndexOf("```");
+          const config = comment.substring(start + 3, end).split("\n");
+          
+          // 写入config.txt
+          let fs = require("fs");
+          let ws = fs.createWriteStream('config.txt');
+          ws.write(label);
+          ws.write("\n");
+          config.forEach(function(value){
+            if(value.trim() != ""){
+                ws.write(value.trim());
+                ws.write("\n");
+            }
+          });
+          ws.end();
+    
+    - name: Set up JDK 1.8
+      uses: actions/setup-java@v1
+      with:
+        java-version: 1.8
+    - name: Generate gif
+      if: ${{ success() }}
+      run: |
+        cat config.txt
+        bash package.sh
+        java -Dfile.encoding=utf-8 -jar addTextToGif.jar
+        
+    - name: Upload Gif
+      if: ${{ success() }}
+      id: gif-upload
+      uses: actions/github-script@v2
+      with:
+        result-encoding: string
+        github-token: ${{ secrets.AUTH_TOKEN }}
+        script: |
+          // 上传图片
+          const currentDate = new Date();
+          const year = currentDate.getFullYear();
+          const month = currentDate.getMonth() + 1;
+          const day = currentDate.getDate();
+          const time = currentDate.getTime();
+          
+          const path = year + "/" + month + "/" + day + "/${{ github.actor }}-" + time + ".gif";
+          //const path = "${{ github.actor }}-" + time + ".gif";
+          const fs = require('fs');
+          
+          let data = fs.readFileSync("result.gif");
+          data = Buffer.from(data).toString('base64');
+          if(data == ""){
+            console.log("gif 为空");
+            return "";
+          }
+          
+          const committer = {
+            name: "ButterAndButterfly",
+            email: "no-such-mail@mail.com"
+          }
+          github.repos.createOrUpdateFile({
+            owner: "ButterAndButterfly",
+            repo: "Q-Gif-ImgBed",
+            path: path,
+            message: "${{ github.actor }}-creat",
+            content: data,
+            committer: committer,
+            author: committer
+          });
+          return path;
+          
+    - name: Reply Comment
+      if: ${{ success() }}
+      uses: actions/github-script@v2
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        script: |
+            const path = "${{steps.gif-upload.outputs.result}}";
+            let replyContent = "输入不合法，或其它异常";
+            if(path != ""){
+              // 生成图片链接 
+              const link = "https://github.com/ButterAndButterfly/Q-Gif-ImgBed/blob/master/"  +  path;
+              const rawlink = link + "?raw=true";
+              // 回复内容
+              replyContent = '@${{ github.actor }} :\n![' + link + '](' + rawlink +')';
+            }
+            github.issues.createComment({
+              owner: context.payload.repository.owner.login,
+              repo: context.payload.repository.name,
+              issue_number: context.issue.number,
+              body: replyContent
+            });
+            console.log(context.payload.issue.comments);
+            if(context.payload.issue.comments > 10){
+                // 按模板新建问题
+                var fs = require("fs");
+                var templateName = context.payload.issue.labels[0].name.replace("Gif-", "") + ".md";
+                fs.readFile("template/" + templateName, 'utf-8', (err, data) => {
+                    if(err){
+                        console.log(templateName + "未找到");
+                        return;
+                    }
+                    github.issues.create({
+                        owner: context.repo.owner,
+                        repo: context.repo.repo,
+                        labels: [context.payload.issue.labels[0].name],
+                        title: context.payload.issue.title,
+                        body: data
+                    }).then(function(result){
+                        console.log(result);
+                        let tip = "因为盖楼过多，该问题即将关闭。请前往<" + result.data.html_url + ">";
+                        // 给个回复，告知新问题链接
+                        github.issues.createComment({
+                          owner: context.payload.repository.owner.login,
+                          repo: context.payload.repository.name,
+                          issue_number: context.issue.number,
+                          body: tip
+                        });
+                        // close该问题
+                        github.issues.update({
+                          owner: context.repo.owner,
+                          repo: context.repo.repo,
+                          issue_number: context.issue.number,
+                          state: 'closed'
+                        });
+                    }, function(err){console.log(err)});
+                });
+            }
+          
+          
