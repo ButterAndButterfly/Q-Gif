@@ -16,11 +16,25 @@
 
 
 ## 如何使用  
++ 请前往[issue](https://github.com/ButterAndButterfly/Q-Gif/issues)，根据标签进行选择。  
++ 比如，[真香-王境泽](https://github.com/ButterAndButterfly/Q-Gif/issues/2)  
+    在对应issue按照格式输入四句台词，例如：  
+    ```
+    我就是饿死
+    死外边，从这里跳下去
+    不会吃你们一点东西
+    真香
+    ```
+    请注意台词需要放入代码区块中(不指定语言)，即用` ``` `包裹
+
+## 相关接口  
 ```java
 // 生成pics/真香.gif
-Bot.zhenxiang("我就是饿死", "死外边，从这里跳下去", "不会吃你们一点东西", "真香");
+FileOutputStream zhenxiang = new FileOutputStream("pics/真香.gif");
+Bot.zhenxiang(zhenxiang, "我就是饿死", "死外边，从这里跳下去", "不会吃你们一点东西", "真香");
 // 生成pics/谁赞成谁反对.gif
-Bot.shuizancheng("我话讲完了", "谁赞成  谁反对", "我反对");
+FileOutputStream shuizancheng = new FileOutputStream("pics/谁赞成谁反对.gif");
+Bot.shuizancheng(shuizancheng, "我话讲完了", "谁赞成  谁反对", "我反对");
 ```        
 
 ## 如何拓展场景  
