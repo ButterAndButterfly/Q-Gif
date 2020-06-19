@@ -33,8 +33,8 @@ public class Main {
 				System.err.println("当前gifType类型不支持！");
 				System.exit(-1);
 			}
-//			FileOutputStream output = new FileOutputStream("result.gif");
-			FileOutputStream output = new FileOutputStream(gifType + ".gif");
+			FileOutputStream output = new FileOutputStream("result.gif");
+//			FileOutputStream output = new FileOutputStream(gifType + ".gif");
 			Bot.gen(gifType, gifConfig, output, talks.toArray(params));
 			reader.close();
 		}catch (Exception e) {
