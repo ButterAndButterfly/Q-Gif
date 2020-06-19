@@ -30,12 +30,16 @@ public class Bot {
 		gifConfigs.put("元首骂人", new int[][] { { 3, 110 }, { 200, 114 }, { 0, 0 }, { 0, 31 }, { 43, 67 }, { 68, 96 } });
 		gifConfigs.put("我卢本伟没有开挂",
 				new int[][] { { 3, 210 }, { 300, 225 }, { 1, 0 }, { 0, 12 }, { 14, 20 }, { 21, 33 } });
+		gifConfigs.put("充钱就能解决", new int[][] { { 2, 180 }, { 397, 196 }, {1, 0}, 
+			{1, 12}, 
+			{16,35}
+		});
 	}
 
 	public static void main(String[] a) throws FileNotFoundException {
-		FileOutputStream output = new FileOutputStream("我卢本伟没有开挂.gif");
+		FileOutputStream output = new FileOutputStream("充钱就能解决.gif");
 		// Bot.gen("真香", output, "我就是饿死", "死外边，从这里跳下去", "不会吃你们一点东西", "真香");
-		Bot.gen("我卢本伟没有开挂", output, "我没有开挂", "我卢本伟", "没有开挂");
+		Bot.gen("充钱就能解决", output, "那我这个问题？", "你这个问题充钱就能解决");
 	}
 
 	/**
