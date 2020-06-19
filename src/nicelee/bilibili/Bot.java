@@ -20,21 +20,22 @@ public class Bot {
 	private static HashMap<String, int[][]> gifConfigs;
 	static {
 		gifConfigs = new HashMap<>(20, 0.9f);
-		// { {台词数量, 文本加词位置Y坐标}, { gif宽度, gif高度}, {字体类型, 字体颜色类型}, { 台词1起始帧, 台词1结束帧 }, ... }
-		// gifConfigs.put("谁赞成谁反对", new int[][] { { num, y }, {0, 0}, { width, height },  });
-		gifConfigs.put("真香", new int[][] { { 4, 165 }, { 298, 184 }, {0, 0}, { 0, 8 }, { 12, 23 }, { 25, 34 }, { 37, 47 } });
-		gifConfigs.put("谁赞成谁反对", new int[][] { { 3, 150 }, { 300, 168 },{0, 0},  { 4, 16 }, { 18, 35 }, { 37, 44 } });
-		gifConfigs.put("元首骂人", new int[][] { { 3, 110 }, { 200, 114 }, {0, 0}, 
-			{0, 31}, 
-			{43,67},
-			{68,96}
-		});
+		// { {台词数量, 文本加词位置Y坐标}, { gif宽度, gif高度}, {字体类型, 字体颜色类型}, { 台词1起始帧, 台词1结束帧 }, ...
+		// }
+		// gifConfigs.put("谁赞成谁反对", new int[][] { { num, y }, {0, 0}, { width, height },
+		// });
+		gifConfigs.put("真香",
+				new int[][] { { 4, 165 }, { 298, 184 }, { 0, 0 }, { 0, 8 }, { 12, 23 }, { 25, 34 }, { 37, 47 } });
+		gifConfigs.put("谁赞成谁反对", new int[][] { { 3, 150 }, { 300, 168 }, { 0, 0 }, { 4, 16 }, { 18, 35 }, { 37, 44 } });
+		gifConfigs.put("元首骂人", new int[][] { { 3, 110 }, { 200, 114 }, { 0, 0 }, { 0, 31 }, { 43, 67 }, { 68, 96 } });
+		gifConfigs.put("我卢本伟没有开挂",
+				new int[][] { { 3, 210 }, { 300, 225 }, { 1, 0 }, { 0, 12 }, { 14, 20 }, { 21, 33 } });
 	}
 
 	public static void main(String[] a) throws FileNotFoundException {
-		FileOutputStream output = new FileOutputStream("元首骂人.gif");
-		//Bot.gen("真香", output, "我就是饿死", "死外边，从这里跳下去", "不会吃你们一点东西", "真香");
-		Bot.gen("元首骂人", output, "楼上的你别嚣张", "就算你的蛋有这么大", "我照样可以捏爆你的蛋蛋");
+		FileOutputStream output = new FileOutputStream("我卢本伟没有开挂.gif");
+		// Bot.gen("真香", output, "我就是饿死", "死外边，从这里跳下去", "不会吃你们一点东西", "真香");
+		Bot.gen("我卢本伟没有开挂", output, "我没有开挂", "我卢本伟", "没有开挂");
 	}
 
 	/**

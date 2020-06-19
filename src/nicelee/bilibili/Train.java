@@ -21,8 +21,8 @@ public class Train {
 	public static void main(String[] a) {
 		{
 			// 获取素材
-			File source = new File("pics/元首骂人/text.gif");
-			File dstFolder = new File("pics/元首骂人/text");
+			File source = new File("pics/我卢本伟没有开挂/text.gif");
+			File dstFolder = new File("pics/我卢本伟没有开挂/text");
 			GifUtil.split(source, dstFolder);
 		}
 

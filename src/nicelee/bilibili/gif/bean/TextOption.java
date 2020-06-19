@@ -14,8 +14,9 @@ public class TextOption {
 	public static Color[] colors;
 	
 	static {
-		fonts = new Font[1];
+		fonts = new Font[2];
 		fonts[0] = new Font("", Font.BOLD, 12);
+		fonts[1] = new Font("黑体", Font.BOLD, 24);
 		colors = new Color[1];
 		colors[0] = Color.white;
 		defaultFont = fonts[0];
