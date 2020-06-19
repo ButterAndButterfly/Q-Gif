@@ -1,5 +1,7 @@
 package nicelee.bilibili;
 
+import java.awt.Color;
+import java.awt.Font;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -18,14 +20,21 @@ public class Bot {
 	private static HashMap<String, int[][]> gifConfigs;
 	static {
 		gifConfigs = new HashMap<>(20, 0.9f);
-		// { {台词数量, 文本加词位置Y坐标}, { gif宽度, gif高度}, { 台词1起始帧, 台词1结束帧 }, ... }
-		gifConfigs.put("真香", new int[][] { { 4, 165 }, { 298, 184 }, { 0, 8 }, { 12, 23 }, { 25, 34 }, { 37, 47 } });
-		gifConfigs.put("谁赞成谁反对", new int[][] { { 3, 150 }, { 300, 168 }, { 4, 16 }, { 18, 35 }, { 37, 44 } });
+		// { {台词数量, 文本加词位置Y坐标}, { gif宽度, gif高度}, {字体类型, 字体颜色类型}, { 台词1起始帧, 台词1结束帧 }, ... }
+		// gifConfigs.put("谁赞成谁反对", new int[][] { { num, y }, {0, 0}, { width, height },  });
+		gifConfigs.put("真香", new int[][] { { 4, 165 }, { 298, 184 }, {0, 0}, { 0, 8 }, { 12, 23 }, { 25, 34 }, { 37, 47 } });
+		gifConfigs.put("谁赞成谁反对", new int[][] { { 3, 150 }, { 300, 168 },{0, 0},  { 4, 16 }, { 18, 35 }, { 37, 44 } });
+		gifConfigs.put("元首骂人", new int[][] { { 3, 110 }, { 200, 114 }, {0, 0}, 
+			{0, 31}, 
+			{43,67},
+			{68,96}
+		});
 	}
 
 	public static void main(String[] a) throws FileNotFoundException {
-		FileOutputStream zhenxiang = new FileOutputStream("pics/真香.gif");
-		Bot.gen("真香", zhenxiang, "我就是饿死", "死外边，从这里跳下去", "不会吃你们一点东西", "真香");
+		FileOutputStream output = new FileOutputStream("元首骂人.gif");
+		//Bot.gen("真香", output, "我就是饿死", "死外边，从这里跳下去", "不会吃你们一点东西", "真香");
+		Bot.gen("元首骂人", output, "楼上的你别嚣张", "就算你的蛋有这么大", "我照样可以捏爆你的蛋蛋");
 	}
 
 	/**
@@ -60,10 +69,12 @@ public class Bot {
 		}
 		int offsetY = gifConfig[0][1];
 		int width = gifConfig[1][0];
+		Font font = TextOption.fonts[gifConfig[2][0]];
+		Color color = TextOption.colors[gifConfig[2][1]];
 		List<TextOption> options = new ArrayList<TextOption>();
-		for (int i = 0; i < gifConfig.length - 2; i++) {
-			TextOption option = new TextOption(gifConfig[i + 2][0], gifConfig[i + 2][1], strs[i],
-					ImgUtil.offsetXCenter(width, strs[i], TextOption.defaultFont), offsetY);
+		for (int i = 0; i < gifConfig.length - 3; i++) {
+			TextOption option = new TextOption(gifConfig[i + 3][0], gifConfig[i + 3][1], strs[i],
+					ImgUtil.offsetXCenter(width, strs[i], font), offsetY, font, color);
 			options.add(option);
 		}
 		run(gifType, fout, options);

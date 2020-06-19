@@ -10,10 +10,16 @@ public class TextOption {
 
 	public static Font defaultFont;
 	public static Color defaultColor;
+	public static Font[] fonts;
+	public static Color[] colors;
 	
 	static {
-		defaultFont = new Font("", Font.BOLD, 12);
-		defaultColor = Color.white;
+		fonts = new Font[1];
+		fonts[0] = new Font("", Font.BOLD, 12);
+		colors = new Color[1];
+		colors[0] = Color.white;
+		defaultFont = fonts[0];
+		defaultColor = colors[0];
 		//TextOption.setDefault(defaultFont, defaultColor);
 	}
 	

@@ -21,17 +21,17 @@ public class Train {
 	public static void main(String[] a) {
 		{
 			// 获取素材
-			File source = new File("pics/真香/text.gif");
-			File dstFolder = new File("pics/真香/text");
+			File source = new File("pics/元首骂人/text.gif");
+			File dstFolder = new File("pics/元首骂人/text");
 			GifUtil.split(source, dstFolder);
 		}
 
-		{
-			// 获取素材
-			File source = new File("pics/真香/notext.gif");
-			File dstFolder = new File("pics/真香/notext");
-			GifUtil.split(source, dstFolder);
-		}
+//		{
+//			// 获取素材
+//			File source = new File("pics/真香/notext.gif");
+//			File dstFolder = new File("pics/真香/notext");
+//			GifUtil.split(source, dstFolder);
+//		}
 
 		// 调试 "我就是饿死" 等（需要调试多次，对比图片看效果）
 		// TextOption需要设置的地方：	
@@ -39,15 +39,15 @@ public class Train {
 		// 		 	图片宽度
 		// 			文字从第几张图片出现，直到第几张图片
 		// TextOption option1 = new TextOption(0, 8, text, ImgUtil.offsetXCenter(298, text, font), 165);
-		try {
-			BufferedImage img = (BufferedImage) ImageIO.read(new File("pics/真香/notext/000.jpg"));
-			Font font = new Font("", Font.BOLD, 12);
-			Color color = Color.white;
-			img = ImgUtil.addText(img, "我就是饿死", 90, 165, font, color);
-			ImageIO.write(img, "jpg", new File("我就是饿死.jpg"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+//		try {
+//			BufferedImage img = (BufferedImage) ImageIO.read(new File("pics/真香/notext/000.jpg"));
+//			Font font = new Font("", Font.BOLD, 12);
+//			Color color = Color.white;
+//			img = ImgUtil.addText(img, "我就是饿死", 90, 165, font, color);
+//			ImageIO.write(img, "jpg", new File("我就是饿死.jpg"));
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
 
 //		// 设置默认属性
 //		Font font = new Font("", Font.BOLD, 12);
