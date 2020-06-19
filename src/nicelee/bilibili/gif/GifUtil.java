@@ -3,11 +3,15 @@ package nicelee.bilibili.gif;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.List;
 
 import javax.imageio.ImageIO;
 import javax.imageio.ImageReader;
+import javax.imageio.metadata.IIOMetadata;
+import javax.imageio.metadata.IIOMetadataNode;
 import javax.imageio.stream.ImageInputStream;
 
 import nicelee.bilibili.gif.bean.TextOption;
@@ -68,14 +72,14 @@ public class GifUtil {
 	 * @param source
 	 * @param dest
 	 * @param options
+	 * @param frameRate 帧率
 	 */
-	public static void addText(InputStream source, File dest, List<TextOption> options, int frameRate) {
+	public static void addText(InputStream source, OutputStream dest, List<TextOption> options, int frameRate) {
 		try {
 			ImageReader reader = (ImageReader) ImageIO.getImageReadersByFormatName("gif").next();
 			ImageInputStream ciis = ImageIO.createImageInputStream(source);
 			reader.setInput(ciis, true);
 			GIFEncoder encoder = new GIFEncoder();
-			String gifDst = dest.getAbsolutePath();
 			try {
 				for (int i = 0;; i++) {
 					BufferedImage image = reader.read(i);
@@ -88,7 +92,7 @@ public class GifUtil {
 					if (i == 0) {
 						encoder.init(image);
 						encoder.setFrameRate(frameRate);
-						encoder.start(gifDst);
+						encoder.start(dest);
 					} else {
 						encoder.addFrame(image);
 					}
@@ -102,4 +106,31 @@ public class GifUtil {
 		}
 	}
 
+	/**
+	 * 根据第index帧的delayTime值计算恒定帧率
+	 * @param gif
+	 * @param index
+	 * @return 恒定帧率
+	 */
+	public static int getAssumingFrameRate(File gif, int index) {
+		try {
+			ImageReader reader = ImageIO.getImageReadersBySuffix("gif").next();
+			ImageInputStream ciis = ImageIO.createImageInputStream(gif);
+			reader.setInput(ciis);
+			IIOMetadata imageMetaData = reader.getImageMetadata(index);
+			String metaFormatName = imageMetaData.getNativeMetadataFormatName();
+			IIOMetadataNode root = (IIOMetadataNode) imageMetaData.getAsTree(metaFormatName);
+			ciis.close();
+
+			IIOMetadataNode graphicsControlExtensionNode = (IIOMetadataNode) root
+					.getElementsByTagName("GraphicControlExtension").item(0);
+			String delayTime =  graphicsControlExtensionNode.getAttribute("delayTime");
+			int frameRate = 100 /Integer.parseInt(delayTime);
+			//System.out.println("frameRate: " + frameRate);
+			return frameRate;
+		} catch (IOException e) {
+			e.printStackTrace();
+			return 0;
+		}
+	}
 }
