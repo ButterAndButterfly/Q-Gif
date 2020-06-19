@@ -26,15 +26,16 @@
     真香
     ```
     请注意台词需要放入代码区块中(不指定语言)，即用` ``` `包裹
++ Gif生成需要一定时间，且即使是失败也会有回复。请勿重复发送。  
 
 ## 相关接口  
 ```java
 // 生成pics/真香.gif
 FileOutputStream zhenxiang = new FileOutputStream("pics/真香.gif");
-Bot.zhenxiang(zhenxiang, "我就是饿死", "死外边，从这里跳下去", "不会吃你们一点东西", "真香");
+Bot.真香(zhenxiang, "我就是饿死", "死外边，从这里跳下去", "不会吃你们一点东西", "真香");
 // 生成pics/谁赞成谁反对.gif
 FileOutputStream shuizancheng = new FileOutputStream("pics/谁赞成谁反对.gif");
-Bot.shuizancheng(shuizancheng, "我话讲完了", "谁赞成  谁反对", "我反对");
+Bot.谁赞成谁反对(shuizancheng, "我话讲完了", "谁赞成  谁反对", "我反对");
 ```        
 
 ## 如何拓展场景  
@@ -60,5 +61,6 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 ```
+本项目用到的Gif图片资源均引用自互联网，所有权利保留
 
 

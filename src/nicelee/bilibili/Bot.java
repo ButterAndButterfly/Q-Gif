@@ -1,7 +1,5 @@
 package nicelee.bilibili;
 
-import java.awt.Color;
-import java.awt.Font;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -17,10 +15,21 @@ public class Bot {
 
 	public static void main(String[] a) throws FileNotFoundException {
 		FileOutputStream zhenxiang = new FileOutputStream("pics/真香.gif");
-		Bot.zhenxiang(zhenxiang, "我就是饿死", "死外边，从这里跳下去", "不会吃你们一点东西", "真香");
+		Bot.真香(zhenxiang, "我就是饿死", "死外边，从这里跳下去", "不会吃你们一点东西", "真香");
 
-		FileOutputStream shuizancheng = new FileOutputStream("pics/谁赞成谁反对.gif");
-		Bot.shuizancheng(shuizancheng, "我话讲完了", "谁赞成  谁反对", "我反对");
+//		FileOutputStream shuizancheng = new FileOutputStream("pics/谁赞成谁反对.gif");
+//		Bot.shuizancheng(shuizancheng, "我话讲完了", "谁赞成  谁反对", "我反对");
+	}
+
+	private static void run(String method, FileOutputStream fout, List<TextOption> options) {
+		try {
+			File gif = new File("pics/" + method + "/notext.gif");
+			int frameRate = GifUtil.getAssumingFrameRate(gif, 1);
+			FileInputStream source = new FileInputStream(gif);
+			GifUtil.addText(source, fout, options, frameRate);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
 	}
 
 	/**
@@ -29,31 +38,23 @@ public class Bot {
 	 * @param fout gif文件输出
 	 * @param strs 4句对白
 	 */
-	public static void zhenxiang(FileOutputStream fout, String... strs) {
+	public static void 真香(FileOutputStream fout, String... strs) {
 		if (strs.length < 4)
 			return;
-		Font font = new Font("", Font.BOLD, 12);
-		Color color = Color.white;
-		TextOption.setDefault(font, color);
-
-		try {
-			File gif = new File("pics/真香/notext.gif");
-			int frameRate = GifUtil.getAssumingFrameRate(gif, 1);
-			FileInputStream source = new FileInputStream(gif);
-			List<TextOption> options = new ArrayList<TextOption>();
-			TextOption option1 = new TextOption(0, 8, strs[0], ImgUtil.offsetXCenter(298, strs[0], font), 165);
-			TextOption option2 = new TextOption(12, 23, strs[1], ImgUtil.offsetXCenter(298, strs[1], font), 165);
-			TextOption option3 = new TextOption(25, 34, strs[2], ImgUtil.offsetXCenter(298, strs[2], font), 165);
-			TextOption option4 = new TextOption(37, 47, strs[3], ImgUtil.offsetXCenter(298, strs[3], font), 165);
-			options.add(option1);
-			options.add(option2);
-			options.add(option3);
-			options.add(option4);
-			GifUtil.addText(source, fout, options, frameRate);
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
-
+		List<TextOption> options = new ArrayList<TextOption>();
+		TextOption option1 = new TextOption(0, 8, strs[0], ImgUtil.offsetXCenter(298, strs[0], TextOption.defaultFont),
+				165);
+		TextOption option2 = new TextOption(12, 23, strs[1],
+				ImgUtil.offsetXCenter(298, strs[1], TextOption.defaultFont), 165);
+		TextOption option3 = new TextOption(25, 34, strs[2],
+				ImgUtil.offsetXCenter(298, strs[2], TextOption.defaultFont), 165);
+		TextOption option4 = new TextOption(37, 47, strs[3],
+				ImgUtil.offsetXCenter(298, strs[3], TextOption.defaultFont), 165);
+		options.add(option1);
+		options.add(option2);
+		options.add(option3);
+		options.add(option4);
+		run(Thread.currentThread().getStackTrace()[1].getMethodName(), fout, options);
 	}
 
 	/**
@@ -62,28 +63,16 @@ public class Bot {
 	 * @param fout gif文件输出
 	 * @param strs 3句对白
 	 */
-	public static void shuizancheng(FileOutputStream fout, String... strs) {
+	public static void 谁赞成谁反对(FileOutputStream fout, String... strs) {
 		if (strs.length < 3)
 			return;
-		Font font = new Font("", Font.BOLD, 12);
-		Color color = Color.white;
-		TextOption.setDefault(font, color);
-
-		try {
-			File gif = new File("pics/谁赞成谁反对/notext.gif");
-			int frameRate = GifUtil.getAssumingFrameRate(gif, 1);
-			FileInputStream source = new FileInputStream(gif);
-			List<TextOption> options = new ArrayList<TextOption>();
-			TextOption option1 = new TextOption(4, 16, strs[0], ImgUtil.offsetXCenter(300, strs[0], font), 150);
-			TextOption option2 = new TextOption(18, 35, strs[1], ImgUtil.offsetXCenter(300, strs[1], font), 150);
-			TextOption option3 = new TextOption(37, 44, strs[2], ImgUtil.offsetXCenter(300, strs[2], font), 150);
-			options.add(option1);
-			options.add(option2);
-			options.add(option3);
-			GifUtil.addText(source, fout, options, frameRate);
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
-
+		List<TextOption> options = new ArrayList<TextOption>();
+		TextOption option1 = new TextOption(4, 16, strs[0], ImgUtil.offsetXCenter(300, strs[0], TextOption.defaultFont), 150);
+		TextOption option2 = new TextOption(18, 35, strs[1], ImgUtil.offsetXCenter(300, strs[1], TextOption.defaultFont), 150);
+		TextOption option3 = new TextOption(37, 44, strs[2], ImgUtil.offsetXCenter(300, strs[2], TextOption.defaultFont), 150);
+		options.add(option1);
+		options.add(option2);
+		options.add(option3);
+		run(Thread.currentThread().getStackTrace()[1].getMethodName(), fout, options);
 	}
 }

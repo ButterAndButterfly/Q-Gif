@@ -8,8 +8,14 @@ import java.awt.Font;
  */
 public class TextOption {
 
-	static Font defaultFont;
-	static Color defaultColor;
+	public static Font defaultFont;
+	public static Color defaultColor;
+	
+	static {
+		defaultFont = new Font("", Font.BOLD, 12);
+		defaultColor = Color.white;
+		//TextOption.setDefault(defaultFont, defaultColor);
+	}
 	
 	public static void setDefault(Font defaultFont, Color defaultColor) {
 		TextOption.defaultFont = defaultFont;
