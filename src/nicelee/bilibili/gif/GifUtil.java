@@ -86,7 +86,7 @@ public class GifUtil {
 					for (TextOption option : options) {
 						if (i >= option.getBegin() && i <= option.getEnd()) {
 							image = ImgUtil.addText(image, option.getContent(), option.getOffsetX(),
-									option.getOffsetY(), option.getFont(), option.getColor());
+									option.getOffsetY(), option.getFont(), option.getColor(), option.getColorShadow());
 						}
 					}
 					if (i == 0) {

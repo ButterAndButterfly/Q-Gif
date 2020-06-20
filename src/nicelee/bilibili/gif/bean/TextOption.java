@@ -18,8 +18,10 @@ public class TextOption {
 		fonts[0] = new Font("", Font.BOLD, 12);
 		fonts[1] = new Font("黑体", Font.BOLD, 24);
 		fonts[2] = new Font("黑体", Font.BOLD, 18);
-		colors = new Color[1];
+		colors = new Color[3];
 		colors[0] = Color.white;
+		colors[1] = Color.black;
+		colors[2] = null;
 		defaultFont = fonts[0];
 		defaultColor = colors[0];
 		//TextOption.setDefault(defaultFont, defaultColor);
@@ -37,13 +39,14 @@ public class TextOption {
 	int offsetY;
 	Font font;
 	Color color;
+	Color colorShadow;
 	
 	
 	public TextOption(int begin, int end, String content, int offsetX, int offsetY) {
-		this(begin, end, content, offsetX, offsetY, defaultFont, defaultColor);
+		this(begin, end, content, offsetX, offsetY, defaultFont, defaultColor, null);
 	}
 	
-	public TextOption(int begin, int end, String content, int offsetX, int offsetY, Font font, Color color) {
+	public TextOption(int begin, int end, String content, int offsetX, int offsetY, Font font, Color color, Color colorShadow) {
 		this.begin = begin;
 		this.end = end;
 		this.content = content;
@@ -51,10 +54,11 @@ public class TextOption {
 		this.offsetY = offsetY;
 		this.font = font;
 		this.color = color;
+		this.colorShadow = colorShadow;
 	}
 	
 	public TextOption clone() {
-		TextOption option = new TextOption(begin, end, content, offsetX, offsetY, defaultFont, color);
+		TextOption option = new TextOption(begin, end, content, offsetX, offsetY, defaultFont, color, colorShadow);
 		return option;
 	}
 	
@@ -99,6 +103,14 @@ public class TextOption {
 	}
 	public void setColor(Color color) {
 		this.color = color;
+	}
+
+	public Color getColorShadow() {
+		return colorShadow;
+	}
+
+	public void setColorShadow(Color colorShadow) {
+		this.colorShadow = colorShadow;
 	}
 	
 }
