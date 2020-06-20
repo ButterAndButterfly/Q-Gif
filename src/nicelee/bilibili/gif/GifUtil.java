@@ -108,6 +108,7 @@ public class GifUtil {
 
 	/**
 	 * 根据第index帧的delayTime值计算恒定帧率
+	 * 
 	 * @param gif
 	 * @param index
 	 * @return 恒定帧率
@@ -124,9 +125,10 @@ public class GifUtil {
 
 			IIOMetadataNode graphicsControlExtensionNode = (IIOMetadataNode) root
 					.getElementsByTagName("GraphicControlExtension").item(0);
-			String delayTime =  graphicsControlExtensionNode.getAttribute("delayTime");
-			int frameRate = 100 /Integer.parseInt(delayTime);
-			//System.out.println("frameRate: " + frameRate);
+			String delayTime = graphicsControlExtensionNode.getAttribute("delayTime");
+			int frameRate = Integer.parseInt(delayTime);
+			frameRate = frameRate == 0 ? 10 : 100 / frameRate;
+			// System.out.println("frameRate: " + frameRate);
 			return frameRate;
 		} catch (IOException e) {
 			e.printStackTrace();
