@@ -116,8 +116,10 @@ jobs:
               // 生成图片链接 
               const link = "https://github.com/ButterAndButterfly/Q-Gif-ImgBed/blob/master/"  +  path;
               const rawlink = link + "?raw=true";
+              const altLink = "https://cdn.jsdelivr.net/gh/ButterAndButterfly/Q-Gif-ImgBed@master/" + path;
               // 回复内容
-              replyContent = '@${{ github.actor }} :\n![' + link + '](' + rawlink +')';
+              replyContent = '@${{ github.actor }} :\n![' + link + '](' + rawlink +')\n\n';
+              replyContent += 'GitHub图片打不开请[jsdelivr CDN](' + altLink + ')';
             }
             github.issues.createComment({
               owner: context.payload.repository.owner.login,
