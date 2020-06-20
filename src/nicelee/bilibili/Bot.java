@@ -39,15 +39,15 @@ public class Bot {
 		gifConfigs.put("你那是馋她身子",
 				new int[][] { { 3, 169 }, { 280, 179 }, { 2, 0, 1 }, { 2, 10 }, { 18, 30 }, { 31, 44 } });
 		gifConfigs.put("外卖小哥我信你个鬼", new int[][] { { 2, 230 }, { 250, 250 }, { 1, 0, 1 }, { 1, 16 }, { 18, 36 } });
+		gifConfigs.put("张全蛋警告", new int[][] { { 3, 150 }, { 300, 167 }, { 2, 0, 1 }, { 1, 7 }, { 12, 19 } , { 23, 45 } });
 	}
 
 	public static void main(String[] a) throws FileNotFoundException {
 //		for(String gifType: gifConfigs.keySet()) {
-//			//String gifType = "外卖小哥我信你个鬼";
 //			FileOutputStream output = new FileOutputStream(gifType + ".gif");
 //			Bot.gen(gifType, output, "第一句台词", "第二句台词", "第三句台词", "第四句台词", "第五句台词");
 //		}
-		String gifType = "外卖小哥我信你个鬼";
+		String gifType = "张全蛋警告";
 		FileOutputStream output = new FileOutputStream(gifType + ".gif");
 		Bot.gen(gifType, output, "第一句台词", "第二句台词", "第三句台词", "第四句台词", "第五句台词");
 	}
