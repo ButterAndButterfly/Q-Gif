@@ -31,14 +31,17 @@ public class Bot {
 		gifConfigs.put("我卢本伟没有开挂",
 				new int[][] { { 3, 210 }, { 300, 225 }, { 1, 0 }, { 0, 12 }, { 14, 20 }, { 21, 33 } });
 		gifConfigs.put("充钱就能解决", new int[][] { { 2, 180 }, { 397, 196 }, { 1, 0 }, { 1, 12 }, { 16, 35 } });
-		gifConfigs.put("张学友万恶之源", new int[][] { { 1, 200 }, { 335, 218 }, { 1, 0 }, { 0, 20 }});
-		gifConfigs.put("金馆长斗图", new int[][] { { 3, 160 }, { 300, 170 }, { 2, 0 }, 
-			{ 1, 61 },{ 85, 107 },{137, 175}});
+		gifConfigs.put("张学友万恶之源", new int[][] { { 1, 200 }, { 335, 218 }, { 1, 0 }, { 0, 20 } });
+		gifConfigs.put("金馆长斗图",
+				new int[][] { { 3, 160 }, { 300, 170 }, { 2, 0 }, { 1, 61 }, { 85, 107 }, { 137, 175 } });
+		gifConfigs.put("你那是馋她身子",
+				new int[][] { { 3, 169 }, { 280, 179 }, { 2, 0 }, { 2, 10 }, { 18, 30 }, { 31, 44 } });
 	}
 
 	public static void main(String[] a) throws FileNotFoundException {
-		FileOutputStream output = new FileOutputStream("金馆长斗图.gif");
-		Bot.gen("金馆长斗图", output, "哈哈哈哈哈哈哈哈...", "跟我斗图", "你们再练五百年也不是我的对手");
+		String gifType = "你那是馋她身子";
+		FileOutputStream output = new FileOutputStream(gifType + ".gif");
+		Bot.gen(gifType, output, "你那叫喜欢吗", "你那是馋她的身子", "你下贱");
 	}
 
 	/**
