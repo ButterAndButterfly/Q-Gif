@@ -6,7 +6,7 @@
         <a href="https://github.com/ButterAndButterfly/Q-Gif" target="_blank">Q-Gif</a>
       </strong>  为Gif定制对话而生  
   <br>
-      <strong>
+      源自<strong>
         <a href="https://github.com/ButterAndButterfly" target="_blank">ButterAndButterfly</a><br>
       </strong>  
         Butter, 寓意宅男; Butterfly, 寓意美好的事物。 
