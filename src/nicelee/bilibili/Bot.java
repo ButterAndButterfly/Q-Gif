@@ -25,23 +25,31 @@ public class Bot {
 		// gifConfigs.put("谁赞成谁反对", new int[][] { { num, y }, {0, 0}, { width, height },
 		// });
 		gifConfigs.put("真香",
-				new int[][] { { 4, 165 }, { 298, 184 }, { 0, 0 }, { 0, 8 }, { 12, 23 }, { 25, 34 }, { 37, 47 } });
-		gifConfigs.put("谁赞成谁反对", new int[][] { { 3, 150 }, { 300, 168 }, { 0, 0 }, { 4, 16 }, { 18, 35 }, { 37, 44 } });
-		gifConfigs.put("元首骂人", new int[][] { { 3, 110 }, { 200, 114 }, { 0, 0 }, { 0, 31 }, { 43, 67 }, { 68, 96 } });
+				new int[][] { { 4, 165 }, { 298, 184 }, { 0, 0, 2 }, { 0, 8 }, { 12, 23 }, { 25, 34 }, { 37, 47 } });
+		gifConfigs.put("谁赞成谁反对",
+				new int[][] { { 3, 150 }, { 300, 168 }, { 0, 0, 2 }, { 4, 16 }, { 18, 35 }, { 37, 44 } });
+		gifConfigs.put("元首骂人",
+				new int[][] { { 3, 110 }, { 200, 114 }, { 0, 0, 2 }, { 0, 31 }, { 43, 67 }, { 68, 96 } });
 		gifConfigs.put("我卢本伟没有开挂",
-				new int[][] { { 3, 210 }, { 300, 225 }, { 1, 0 }, { 0, 12 }, { 14, 20 }, { 21, 33 } });
-		gifConfigs.put("充钱就能解决", new int[][] { { 2, 180 }, { 397, 196 }, { 1, 0 }, { 1, 12 }, { 16, 35 } });
-		gifConfigs.put("张学友万恶之源", new int[][] { { 1, 200 }, { 335, 218 }, { 1, 0 }, { 0, 20 } });
+				new int[][] { { 3, 210 }, { 300, 225 }, { 1, 0, 1 }, { 0, 12 }, { 14, 20 }, { 21, 33 } });
+		gifConfigs.put("充钱就能解决", new int[][] { { 2, 180 }, { 397, 196 }, { 1, 0, 1 }, { 1, 12 }, { 16, 35 } });
+		gifConfigs.put("张学友万恶之源", new int[][] { { 1, 200 }, { 335, 218 }, { 1, 0, 2 }, { 0, 20 } });
 		gifConfigs.put("金馆长斗图",
-				new int[][] { { 3, 160 }, { 300, 170 }, { 2, 0 }, { 1, 61 }, { 85, 107 }, { 137, 175 } });
+				new int[][] { { 3, 160 }, { 300, 170 }, { 2, 0, 2 }, { 1, 61 }, { 85, 107 }, { 137, 175 } });
 		gifConfigs.put("你那是馋她身子",
-				new int[][] { { 3, 169 }, { 280, 179 }, { 2, 0 }, { 2, 10 }, { 18, 30 }, { 31, 44 } });
+				new int[][] { { 3, 169 }, { 280, 179 }, { 2, 0, 1 }, { 2, 10 }, { 18, 30 }, { 31, 44 } });
+		gifConfigs.put("外卖小哥我信你个鬼", new int[][] { { 2, 230 }, { 250, 250 }, { 1, 0, 1 }, { 1, 16 }, { 18, 36 } });
 	}
 
 	public static void main(String[] a) throws FileNotFoundException {
-		String gifType = "你那是馋她身子";
+//		for(String gifType: gifConfigs.keySet()) {
+//			//String gifType = "外卖小哥我信你个鬼";
+//			FileOutputStream output = new FileOutputStream(gifType + ".gif");
+//			Bot.gen(gifType, output, "第一句台词", "第二句台词", "第三句台词", "第四句台词", "第五句台词");
+//		}
+		String gifType = "外卖小哥我信你个鬼";
 		FileOutputStream output = new FileOutputStream(gifType + ".gif");
-		Bot.gen(gifType, output, "你那叫喜欢吗", "你那是馋她的身子", "你下贱");
+		Bot.gen(gifType, output, "第一句台词", "第二句台词", "第三句台词", "第四句台词", "第五句台词");
 	}
 
 	/**
@@ -78,10 +86,11 @@ public class Bot {
 		int width = gifConfig[1][0];
 		Font font = TextOption.fonts[gifConfig[2][0]];
 		Color color = TextOption.colors[gifConfig[2][1]];
+		Color colorShadow = TextOption.colors[gifConfig[2][2]];
 		List<TextOption> options = new ArrayList<TextOption>();
 		for (int i = 0; i < gifConfig.length - 3; i++) {
 			TextOption option = new TextOption(gifConfig[i + 3][0], gifConfig[i + 3][1], strs[i],
-					ImgUtil.offsetXCenter(width, strs[i], font), offsetY, font, color);
+					ImgUtil.offsetXCenter(width, strs[i], font), offsetY, font, color, colorShadow);
 			options.add(option);
 		}
 		run(gifType, fout, options);
