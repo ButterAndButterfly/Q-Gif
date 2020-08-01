@@ -21,8 +21,9 @@ public class Train {
 	public static void main(String[] a) {
 		{
 			// 获取素材
-			File source = new File("pics/充钱就能解决/text.gif");
-			File dstFolder = new File("pics/充钱就能解决/text");
+			String gifType = "你好骚哦";
+			File source = new File("pics/" + gifType +"/text.gif");
+			File dstFolder = new File("pics/" + gifType + "/text");
 			GifUtil.split(source, dstFolder);
 		}
 
