@@ -46,6 +46,8 @@ public class Bot {
 		gifConfigs.put("打人耳光", new int[][] { { 1, 188 }, { 300, 200 }, { 2, 0, 2 }, { 0, 35 } });
 		gifConfigs.put("吔屎啦梁非凡",
 				new int[][] { { 4, 155 }, { 300, 167 }, { 2, 0, 1 }, { 0, 9 }, { 10, 19 }, { 20, 36 }, { 37, 44 } });
+		gifConfigs.put("为所欲为", new int[][] { { 9, 120 }, { 236, 132 }, { 0, 0, 1 }, { 8, 9 }, { 20, 26 }, { 32, 44 },
+				{ 46, 59 }, { 61, 69 }, { 72, 78 }, { 83, 97 }, { 107, 117 }, { 118, 124 } });
 	}
 
 	public static void main(String[] a) throws FileNotFoundException {
