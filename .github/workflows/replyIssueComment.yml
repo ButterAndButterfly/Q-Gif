@@ -26,14 +26,7 @@ jobs:
         echo ${{ github.actor != 'github-actions[bot]' }}
         
     - uses: actions/checkout@v2
-    
-    - name: install font
-      run: |
-        echo $JAVA_HOME
-        mkdir $JAVA_HOME/jre/lib/fonts/fallback
-        cd font
-        cp simhei.ttf $JAVA_HOME/jre/lib/fonts/fallback/
-    
+  
     - name: Check Issue Content
       uses: actions/github-script@v2
       with:
@@ -64,6 +57,15 @@ jobs:
       uses: actions/setup-java@v1
       with:
         java-version: 1.8
+        
+        
+    - name: install font
+      run: |
+        echo $JAVA_HOME
+        mkdir -p $JAVA_HOME/jre/lib/fonts/fallback
+        cd font
+        cp simhei.ttf $JAVA_HOME/jre/lib/fonts/fallback/
+  
     - name: Generate gif
       if: ${{ success() }}
       run: |
