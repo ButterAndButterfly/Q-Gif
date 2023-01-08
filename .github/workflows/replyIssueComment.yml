@@ -104,7 +104,7 @@ jobs:
             name: "ButterAndButterfly",
             email: "no-such-mail@mail.com"
           }
-          github.repos.createOrUpdateFileContents({
+          github.rest.repos.createOrUpdateFileContents({
             owner: "ButterAndButterfly",
             repo: "Q-Gif-ImgBed",
             path: path,
@@ -132,7 +132,7 @@ jobs:
               replyContent = '@${{ github.actor }} :\n![' + link + '](' + rawlink +')\n\n';
               replyContent += 'GitHub图片打不开请[jsdelivr CDN](' + altLink + ')';
             }
-            github.issues.createComment({
+            github.rest.issues.createComment({
               owner: context.payload.repository.owner.login,
               repo: context.payload.repository.name,
               issue_number: context.issue.number,
@@ -148,7 +148,7 @@ jobs:
                         console.log(templateName + "未找到");
                         return;
                     }
-                    github.issues.create({
+                    github.rest.issues.create({
                         owner: context.repo.owner,
                         repo: context.repo.repo,
                         labels: [context.payload.issue.labels[0].name],
@@ -158,14 +158,14 @@ jobs:
                         console.log(result);
                         let tip = "因为盖楼过多，该问题即将关闭。请前往<" + result.data.html_url + ">";
                         // 给个回复，告知新问题链接
-                        github.issues.createComment({
+                        github.rest.issues.createComment({
                           owner: context.payload.repository.owner.login,
                           repo: context.payload.repository.name,
                           issue_number: context.issue.number,
                           body: tip
                         });
                         // close该问题
-                        github.issues.update({
+                        github.rest.issues.update({
                           owner: context.repo.owner,
                           repo: context.repo.repo,
                           issue_number: context.issue.number,
