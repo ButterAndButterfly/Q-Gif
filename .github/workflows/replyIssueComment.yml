@@ -25,10 +25,10 @@ jobs:
         echo ${{ contains(github.event.issue.labels.*.name, 'Gif-真香') }}
         echo ${{ github.actor != 'github-actions[bot]' }}
         
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
   
     - name: Check Issue Content
-      uses: actions/github-script@v2
+      uses: actions/github-script@v6
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }}
         script: |
@@ -54,8 +54,9 @@ jobs:
           ws.end();
     
     - name: Set up JDK 1.8
-      uses: actions/setup-java@v1
+      uses: actions/setup-java@v3
       with:
+        distribution: 'temurin'
         java-version: 1.8
         
         
@@ -76,7 +77,7 @@ jobs:
     - name: Upload Gif
       if: ${{ success() }}
       id: gif-upload
-      uses: actions/github-script@v2
+      uses: actions/github-script@v6
       with:
         result-encoding: string
         github-token: ${{ secrets.AUTH_TOKEN }}
@@ -116,7 +117,7 @@ jobs:
           
     - name: Reply Comment
       if: ${{ success() }}
-      uses: actions/github-script@v2
+      uses: actions/github-script@v6
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }}
         script: |
