@@ -104,7 +104,7 @@ jobs:
             name: "ButterAndButterfly",
             email: "no-such-mail@mail.com"
           }
-          github.repos.createOrUpdateFile({
+          github.repos.createOrUpdateFileContents({
             owner: "ButterAndButterfly",
             repo: "Q-Gif-ImgBed",
             path: path,
